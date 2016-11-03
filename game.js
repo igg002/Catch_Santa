@@ -37,6 +37,7 @@ var thisScene = new sceneComponents();
 var basicSphereMesh = new GameObject();
 
 function generateWorldTileMap(){
+    //SelectStartingPoint
     for(var startingPointCnt = 0; startingPointCnt < startingPoint; startingPointCnt++){
         startingPointArray[startingPointCnt] = Math.floor(Math.random() * mapSize).toString() + "," + Math.floor(Math.random() * mapSize).toString();
         console.log(startingPointArray[startingPointCnt]);
@@ -115,7 +116,7 @@ function buildTerrain(){
 
 function setupScene(){
     thisScene.scene = new THREE.Scene();
-    thisScene.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+    thisScene.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 50);
     thisScene.renderer = new THREE.WebGLRenderer();
     thisScene.renderer.setSize(window.innerWidth, window.innerHeight);
     thisScene.loader = new THREE.TextureLoader();
