@@ -21,7 +21,7 @@ var GameObject = function(){
 
 var tileMap = new Array();
 var mapSize = 50;
-var startingPoint = 3;
+var startingPoint = 10;
 var upperBuildArea = 1;
 var upperBuildTimes;
 var startingPointArray = new Array();
@@ -37,7 +37,6 @@ var thisScene = new sceneComponents();
 var basicSphereMesh = new GameObject();
 
 function generateWorldTileMap(){
-    //SelectStartingPoint
     for(var startingPointCnt = 0; startingPointCnt < startingPoint; startingPointCnt++){
         startingPointArray[startingPointCnt] = Math.floor(Math.random() * mapSize).toString() + "," + Math.floor(Math.random() * mapSize).toString();
         console.log(startingPointArray[startingPointCnt]);
@@ -61,11 +60,11 @@ function generateWorldTileMap(){
     for(var i = 0; i < mapSize; i++){
         for(var j = 0; j < mapSize; j++){
             if(savingFirstPoints[i][j] == 1){
-                upperBuildTimes = Math.ceil(Math.random() * 3);
+                upperBuildTimes = Math.ceil(Math.random() * 5);
                 upperBuildArea = 0;
                 console.log("upperBuildingTimes : " + upperBuildTimes);
                 for(var k = 0; k < upperBuildTimes; k++){
-                    upperBuildArea += Math.ceil(Math.random() * 3);
+                    upperBuildArea += Math.ceil(Math.random() * 5);
                     console.log("upperBuildingArea : " + upperBuildArea);
                     for(var h = 0; h < mapSize; h++){
                         for(var r = 0; r < mapSize; r++){
