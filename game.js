@@ -94,7 +94,18 @@ function printTileMap(){
 }
 
 function buildTerrain(){
-    
+    for(var i = 0; i < mapSize; i++){
+        for(var j = 0; j < mapSize; j++){
+            for(var k = 0; k <= tileMap[i][j]; k++){
+                var block = new THREE.BoxGeometry(1, 1, 1);
+                var material = new THREE.MeshPhongMaterial({shading: THREE.FlatShading});
+                var object = new THREE.Mesh(block, material);
+                thisScene.scene.add(object);
+                object.position.set(i, k, j);
+            }
+        }
+    }
+    console.log("Terrain Build Complete");
 }
 
 //var block = new THREE.BoxGeometry(1, 1, 1);
