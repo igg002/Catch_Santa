@@ -20,12 +20,17 @@ var GameObject = function(){
 };
 
 var tileMap = new Array();
-var mapSize = 100;
-var startingPoint = 50;
-var upperBuildArea = 3;
+var mapSize = 50;
+var startingPoint = 3;
+var upperBuildArea = 1;
+var upperBuildTimes;
 var startingPointArray = new Array();
 for(var i = 0; i < mapSize; i++){
     tileMap[i] = new Array();
+}
+var savingFirstPoints = new Array();
+for(var i = 0; i < mapSize; i++){
+    savingFirstPoints[i] = new Array();
 }
 
 var thisScene = new sceneComponents();
@@ -39,28 +44,39 @@ function generateWorldTileMap(){
     }
     
     for(var i = 0; i < mapSize; i++){
-        for(var j = 0; j < mapSize; j++){    
-            console.log("i : " + i.toString() + " j : " + j.toString());
+        for(var j = 0; j < mapSize; j++){
             for(var k = 0; k < startingPoint; k++){
-                var first, second;
-                first = startingPointArray[k].split(",")[0];
-                second = startingPointArray[k].split(",")[1];
-                if(i.toString() == first && j.toString() == second){
-                    console.log("i : " + i.toString() + " j : " + j.toString() + " Exist");
+                if(i == startingPointArray[k].split(",")[0] && j == startingPointArray[k].split(",")[1]){
                     tileMap[i][j] = 1;
-                    for(var h = -1; h < upperBuildArea-1; h++){
-                        for(var r = -1; r < upperBuildArea-1; r++){
-                            if(i+h >= 0){
-                                if(j+r >= 0){
-                                    tileMap[i+h][j+r] += 1;                                            
+                    savingFirstPoints[i][j] = 1;
+                    break;
+                } else {
+                    tileMap[i][j] = 0;
+                    savingFirstPoints[i][j] = 0;
+                }
+            }
+        }
+    }
+    
+    for(var i = 0; i < mapSize; i++){
+        for(var j = 0; j < mapSize; j++){
+            if(savingFirstPoints[i][j] == 1){
+                upperBuildTimes = Math.ceil(Math.random() * 3);
+                upperBuildArea = 0;
+                console.log("upperBuildingTimes : " + upperBuildTimes);
+                for(var k = 0; k < upperBuildTimes; k++){
+                    upperBuildArea += Math.ceil(Math.random() * 3);
+                    console.log("upperBuildingArea : " + upperBuildArea);
+                    for(var h = 0; h < mapSize; h++){
+                        for(var r = 0; r < mapSize; r++){
+                            if(h >= i-upperBuildArea && h <= i+upperBuildArea){
+                                if(r >= j-upperBuildArea && r<= j+upperBuildArea){
+                                    tileMap[h][r]++;  
                                 }
                             }
                         }
                     }
-                    break;
-                } else {
-                    tileMap[i][j] = 0;
-                }    
+                }
             }
         }
     }
@@ -78,19 +94,14 @@ function printTileMap(){
 }
 
 function buildTerrain(){
-    for(var i = 0; i < mapSize; i++){
-        for(var j = 0; j < mapSize; j++){
-            for(var k = 0; k <= tileMap[j][i]; k++){
-                var block = new THREE.BoxGeometry(1, 1, 1);
-                var material = new THREE.MeshPhongMaterial({shading: THREE.FlatShading});
-                var object = new THREE.Mesh(block, material);
-                thisScene.scene.add(object);
-                object.position.set(j, k, i);
-                console.log("Added! " + "X Pos : " + j + " Y Pos : " + k + " Z Pos : " + i);    
-            }
-        }
-    }
+    
 }
+
+//var block = new THREE.BoxGeometry(1, 1, 1);
+//                var material = new THREE.MeshPhongMaterial({shading: THREE.FlatShading});
+//                var object = new THREE.Mesh(block, material);
+//                thisScene.scene.add(object);
+//                object.position.set(j, k, i);
 
 function setupScene(){
     thisScene.scene = new THREE.Scene();
