@@ -20,8 +20,9 @@ var GameObject = function(){
 };
 
 var tileMap = new Array();
-var mapSize = 10;
-var startingPoint = 3;
+var mapSize = 100;
+var startingPoint = 50;
+var upperBuildArea = 3;
 var startingPointArray = new Array();
 for(var i = 0; i < mapSize; i++){
     tileMap[i] = new Array();
@@ -47,6 +48,15 @@ function generateWorldTileMap(){
                 if(i.toString() == first && j.toString() == second){
                     console.log("i : " + i.toString() + " j : " + j.toString() + " Exist");
                     tileMap[i][j] = 1;
+                    for(var h = -1; h < upperBuildArea-1; h++){
+                        for(var r = -1; r < upperBuildArea-1; r++){
+                            if(i+h >= 0){
+                                if(j+r >= 0){
+                                    tileMap[i+h][j+r] += 1;                                            
+                                }
+                            }
+                        }
+                    }
                     break;
                 } else {
                     tileMap[i][j] = 0;
@@ -112,6 +122,7 @@ function setupGame(){
 function animateScene(){
     setInterval(function(){
         //basicSphereMesh.gameObject.rotation.y+=0.01;
+        //thisScene.camera.lookAt( new THREE.Vector3( 30, 0, 0 ) );
         thisScene.renderer.render(thisScene.scene, thisScene.camera);
     }, 50);
 }
