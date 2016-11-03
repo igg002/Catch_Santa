@@ -7,6 +7,7 @@ var sceneComponents = function(){
     this.camera = null;
     this.renderer = null;
     this.controls = null;
+    this.loader = null;
 };
 
 var GameObject = function(){
@@ -19,8 +20,8 @@ var GameObject = function(){
 };
 
 var tileMap = new Array();
-var mapSize = 100;
-var startingPoint = 50;
+var mapSize = 10;
+var startingPoint = 3;
 var startingPointArray = new Array();
 for(var i = 0; i < mapSize; i++){
     tileMap[i] = new Array();
@@ -66,18 +67,39 @@ function printTileMap(){
     console.log(printing);
 }
 
+function buildTerrain(){
+    for(var i = 0; i < mapSize; i++){
+        for(var j = 0; j < mapSize; j++){
+            for(var k = 0; k <= tileMap[j][i]; k++){
+                var block = new THREE.BoxGeometry(1, 1, 1);
+                var material = new THREE.MeshPhongMaterial({shading: THREE.FlatShading});
+                var object = new THREE.Mesh(block, material);
+                thisScene.scene.add(object);
+                object.position.set(j, k, i);
+                console.log("Added! " + "X Pos : " + j + " Y Pos : " + k + " Z Pos : " + i);    
+            }
+        }
+    }
+}
+
 function setupScene(){
     thisScene.scene = new THREE.Scene();
     thisScene.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
     thisScene.renderer = new THREE.WebGLRenderer();
     thisScene.renderer.setSize(window.innerWidth, window.innerHeight);
+    thisScene.loader = new THREE.TextureLoader();
     document.body.appendChild(thisScene.renderer.domElement);
 }
 
 function setupGame(){
-    basicSphereMesh.mesh = new THREE.SphereGeometry(1, 24, 24);
+//    var characterTexture = thisScene.loader.load("3.png");
+    //basicSphereMesh.mesh = new THREE.SphereGeometry(1, 24, 24);
+    basicSphereMesh.mesh = new THREE.BoxGeometry(1, 1, 1);
+    //basicSphereMesh.material = new THREE.MeshPhongMaterial({shading: THREE.FlatShading, map: characterTexture});
     basicSphereMesh.material = new THREE.MeshPhongMaterial({shading: THREE.FlatShading});
+    //basicSphereMesh.material = new THREE.MeshBasicMaterial({map: characterTexture});
     basicSphereMesh.makeObject();
+    //thisScene.scene.add(object);
     
     var light = new THREE.DirectionalLight( 0xdddddd, 0.8 );
     light.position.set( -80, 80, 80 );
@@ -85,11 +107,11 @@ function setupGame(){
     thisScene.camera.position.set(0,0,10);
     
     thisScene.scene.add(light);
-    thisScene.scene.add(basicSphereMesh.gameObject);
 }
 
 function animateScene(){
     setInterval(function(){
+        //basicSphereMesh.gameObject.rotation.y+=0.01;
         thisScene.renderer.render(thisScene.scene, thisScene.camera);
     }, 50);
 }
@@ -122,6 +144,12 @@ function onKeyDown(e){
     }
     if(e.keyCode == 68){
         thisScene.camera.position.x += 0.1;
+    }
+    if(e.keyCode == 69){
+        thisScene.camera.position.y += 0.1;
+    }
+    if(e.keyCode == 67){
+        thisScene.camera.position.y -= 0.1;
     }
 }
 
