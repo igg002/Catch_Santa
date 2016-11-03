@@ -49,10 +49,10 @@ setInterval(function(){
         for(var i = 0; i < 10; i++){
             meshObject[j][i].rotation.x+=0.07;
             meshObject[j][i].rotation.y+=0.2;
-            meshObject[j][i].scale.set(scalee, scalee, scalee);
+            //meshObject[j][i].scale.set(scalee, scalee, scalee);
         }
     }
-    scalee+=0.005;
+    //scalee+=0.005;
     renderer.render( scene, camera );
 }, 20);
 
@@ -61,7 +61,7 @@ setInterval(function(){
     for(var j = 0; j < 3; j++){
         for(var i = 0; i < 10; i++){
             if(i == cnt){
-                scene.remove(meshObject[j][i]);     
+                //scene.remove(meshObject[j][i]);     
             }
         }
     }

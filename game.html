@@ -4,10 +4,17 @@
         <meta charset="utf-8">
         <title>Catch_Santa</title>
         <script src="three.js"></script>
+        <style>
+            html,body{
+	           overflow:hidden;
+            }
+        </style>
     </head>
     <body>
         <script src="game.js"></script>
         <script>
+            generateWorldTileMap();
+            printTileMap();
             setupScene();
             setupGame();
             animateScene();
